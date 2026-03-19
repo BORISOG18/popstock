@@ -370,7 +370,7 @@ export default function App() {
         <div style={S.modal}><div style={{...S.mbox,minWidth:520}}>
           <div className="card-title" style={{marginBottom:20}}>⚙ BUSINESS SETTINGS</div>
 
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14,marginBottom:20}}>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:12,marginBottom:20}}>
             {[
               {key:'businessName', lbl:'BUSINESS NAME',  ph:'e.g. VivoPop Store'},
               {key:'sellerName',   lbl:'YOUR NAME',       ph:'e.g. Rahul'},
@@ -600,11 +600,11 @@ export default function App() {
             <div><div className="lbl">IDs</div><div className="mono" style={{color:'#e8eaf0',fontSize:14}}>{bulkIds.length}</div></div>
             {settings.businessUPI&&<div><div className="lbl">YOUR UPI</div><div className="mono" style={{color:'#5b6fff',fontSize:14}}>{settings.businessUPI}</div></div>}
           </div>
-          <div style={{display:'grid',gridTemplateColumns:'1.5fr 1fr',gap:20}}>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:16}}>
             <div className="card">
               <div className="card-title">BULK ID STOCK</div>
               {bulkIds.length===0&&<div className="empty-msg">No Bulk IDs yet.</div>}
-              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:6}}>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(120px,1fr))',gap:6}}>
                 {bulkIds.slice(0,30).map(b=>{
                   const ipc=b.itemsPerID||10,isz=b.itemSize||1500,usedIt=b.usedItems||0,availIt=ipc-usedIt;
                   const pct=ipc>0?usedIt/ipc:0,col=stockColor(usedIt,ipc);
@@ -667,7 +667,7 @@ export default function App() {
                   </div>
                 )}
               </div>
-              <div style={{display:'grid',gridTemplateColumns:'1.4fr 0.7fr 0.7fr 1fr 1fr',gap:14,marginBottom:14}}>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(120px,1fr))',gap:12,marginBottom:14}}>
                 {[{key:'prefix',lbl:'PREFIX',ph:'vivopop'},{key:'from',lbl:'FROM #',ph:'1'},{key:'to',lbl:'TO #',ph:'100'},{key:'itemSize',lbl:'POP/ITEM',ph:'1500'},{key:'itemsPerID',lbl:'ITEMS/ID',ph:'10'}].map(f=>(
                   <div key={f.key}><div className="lbl">{f.lbl}</div><input value={rangeForm[f.key]} onChange={e=>setRangeForm(p=>({...p,[f.key]:e.target.value}))} placeholder={f.ph}/></div>
                 ))}
@@ -690,7 +690,7 @@ export default function App() {
             </div>)}
           </div>)}
           <div className="card">
-            <table className="tbl">
+            <div className="tbl-wrap"><table className="tbl">
               <thead><tr><th>BULK ID</th><th>POP/ITEM</th><th>ITEMS</th><th>USED</th><th>AVAIL</th><th>POP LEFT</th><th>₹ VALUE</th><th>STATUS</th><th></th></tr></thead>
               <tbody>
                 {bulkIds.length===0&&<tr><td colSpan={9} style={{color:'#4a5278',textAlign:'center',padding:24}}>No Bulk IDs. Click "+ Add Bulk IDs".</td></tr>}
@@ -722,7 +722,7 @@ export default function App() {
         {activeTab==='New Order'&&(<div style={{maxWidth:720}}>
           <div className="page-title" style={{marginBottom:20}}>FULFILL CUSTOMER ORDER</div>
           <div className="card">
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,marginBottom:18}}>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:14,marginBottom:18}}>
               <div><div className="lbl">CUSTOMER BGMI UID</div><input value={custId} onChange={e=>setCustId(e.target.value)} placeholder="e.g. 5438272758"/></div>
               <div><div className="lbl">ORDER QUANTITY</div><input value={orderQty} onChange={e=>setOrderQty(e.target.value)} placeholder="e.g. 500K or 300000"/></div>
             </div>
@@ -739,7 +739,7 @@ export default function App() {
               {!orderPlan&&<div className="empty-msg">Enter quantity to see the plan.</div>}
               {orderPlan&&!orderPlan.fulfilled&&(<div style={{color:'#ff4d4d',fontFamily:'Space Mono,monospace',fontSize:13}}>⚠ Not enough stock! Need {fmtK(orderPlan.qty)}, have {fmtK(stats.available)}.</div>)}
               {orderPlan&&orderPlan.fulfilled&&(<div>
-                <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:10,marginBottom:16,background:'#111420',borderRadius:10,padding:14}}>
+                <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(80px,1fr))',gap:8,marginBottom:16,background:'#111420',borderRadius:10,padding:12}}>
                   <div><div className="lbl">TARGET</div><div className="mono" style={{color:'#9ba3cc',fontSize:14}}>{fmtK(orderPlan.qty)}</div></div>
                   <div><div className="lbl">ACTUAL</div><div className="mono" style={{color:'#e8eaf0',fontSize:14,fontWeight:700}}>{fmtK(orderPlan.totalPop)}</div></div>
                   <div><div className="lbl">ITEMS</div><div className="mono" style={{color:'#5b6fff',fontSize:14,fontWeight:700}}>{orderPlan.totalItems}</div></div>
@@ -797,7 +797,7 @@ export default function App() {
               <button className="btn-outline" onClick={exportCSV}>⬇ CSV</button>
             </div>
           </div>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,marginBottom:20}}>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(140px,1fr))',gap:12,marginBottom:16}}>
             {[
               {lbl:'TOTAL ORDERS',val:orders.length,col:'#5b6fff'},
               {lbl:'TOTAL EARNED',val:fmtRs(stats.totalEarnings),col:'#00e5a0'},
@@ -806,7 +806,7 @@ export default function App() {
             ].map(s=>(<div key={s.lbl} className="stat-card"><div className="lbl">{s.lbl}</div><div style={{fontSize:20,fontWeight:800,color:s.col,fontFamily:'Space Mono,monospace'}}>{s.val}</div></div>))}
           </div>
           <div className="card">
-            <table className="tbl">
+            <div className="tbl-wrap"><table className="tbl">
               <thead><tr><th>ORDER ID</th><th>CUSTOMER</th><th>POP</th><th>ITEMS</th><th>IDs</th><th>EARNINGS</th><th>DATE</th><th>ACTIONS</th></tr></thead>
               <tbody>
                 {filteredOrders.length===0&&<tr><td colSpan={8} style={{color:'#4a5278',textAlign:'center',padding:24}}>No orders found.</td></tr>}
@@ -837,17 +837,19 @@ export default function App() {
 
 const btnInv={background:'linear-gradient(135deg,#5b6fff,#8b5cf6)',border:'none',color:'#fff',fontFamily:'Syne,sans-serif',fontWeight:700,fontSize:13,padding:'12px',borderRadius:10,cursor:'pointer'};
 
+const isMobile = () => window.innerWidth <= 768;
+
 const S={
   app:      {minHeight:'100vh',background:'#0a0c14',color:'#e8eaf0',fontFamily:"'Syne','Trebuchet MS',sans-serif"},
-  header:   {padding:'20px 32px',borderBottom:'1px solid #1a2040',display:'flex',alignItems:'center',justifyContent:'space-between'},
-  logo:     {fontSize:24,fontWeight:800,color:'#fff',letterSpacing:'-0.02em'},
-  sub:      {fontSize:11,color:'#4a5278',fontFamily:'Space Mono,monospace',marginTop:2},
-  tabBar:   {padding:'0 32px',borderBottom:'1px solid #1a2040',display:'flex',gap:4},
-  content:  {padding:'28px 32px',maxWidth:1200,margin:'0 auto'},
-  statsGrid:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,marginBottom:20},
+  header:   {padding:'16px 16px',borderBottom:'1px solid #1a2040',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:8},
+  logo:     {fontSize:22,fontWeight:800,color:'#fff',letterSpacing:'-0.02em'},
+  sub:      {fontSize:10,color:'#4a5278',fontFamily:'Space Mono,monospace',marginTop:2},
+  tabBar:   {padding:'0 12px',borderBottom:'1px solid #1a2040',display:'flex',gap:2,overflowX:'auto',WebkitOverflowScrolling:'touch'},
+  content:  {padding:'16px',maxWidth:1200,margin:'0 auto'},
+  statsGrid:{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10,marginBottom:16},
   orow:     {display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12,paddingBottom:12,borderBottom:'1px solid #1a2040'},
-  modal:    {position:'fixed',inset:0,background:'#000000bb',display:'flex',alignItems:'center',justifyContent:'center',zIndex:999,padding:20},
-  mbox:     {background:'#111420',border:'1px solid #1a2040',borderRadius:16,padding:28,minWidth:420,maxHeight:'90vh',overflowY:'auto'},
+  modal:    {position:'fixed',inset:0,background:'#000000bb',display:'flex',alignItems:'center',justifyContent:'center',zIndex:999,padding:12,overflowY:'auto'},
+  mbox:     {background:'#111420',border:'1px solid #1a2040',borderRadius:16,padding:20,width:'100%',maxWidth:540,maxHeight:'90vh',overflowY:'auto'},
 };
 
 const CSS=`
@@ -883,11 +885,33 @@ const CSS=`
   .lbl{color:#4a5278;font-size:10px;font-weight:700;letter-spacing:.08em;font-family:'Space Mono',monospace;margin-bottom:4px;display:block}
   .mono{font-family:'Space Mono',monospace}
   .progress-bar{height:4px;background:#1a2040;border-radius:3px;overflow:hidden;margin-top:4px}
-  .notif{position:fixed;top:20px;right:24px;padding:13px 22px;border-radius:12px;font-family:'Syne',sans-serif;font-size:14px;font-weight:600;z-index:9999;animation:slideIn .3s ease}
+  .notif{position:fixed;top:16px;left:50%;transform:translateX(-50%);padding:12px 20px;border-radius:12px;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;z-index:9999;white-space:nowrap;max-width:92vw}
   .ns{background:#00e5a020;border:1px solid #00e5a050;color:#00e5a0}.ne{background:#ff4d4d20;border:1px solid #ff4d4d50;color:#ff4d4d}
-  @keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
-  .tbl{width:100%;border-collapse:collapse}
-  .tbl th{text-align:left;padding:10px 14px;color:#4a5278;font-size:11px;font-weight:700;letter-spacing:.1em;font-family:'Space Mono',monospace;border-bottom:1px solid #1a2040}
-  .tbl td{padding:11px 14px;font-size:12px;border-bottom:1px solid #13182a;font-family:'Space Mono',monospace;vertical-align:top}
+  @keyframes slideIn{from{opacity:0}to{opacity:1}}
+  .tbl-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+  .tbl{width:100%;border-collapse:collapse;min-width:460px}
+  .tbl th{text-align:left;padding:10px 12px;color:#4a5278;font-size:10px;font-weight:700;letter-spacing:.08em;font-family:'Space Mono',monospace;border-bottom:1px solid #1a2040}
+  .tbl td{padding:10px 12px;font-size:11px;border-bottom:1px solid #13182a;font-family:'Space Mono',monospace;vertical-align:top}
   .tbl tr:last-child td{border-bottom:none}.tbl tr:hover td{background:#131827}
+
+  @media(min-width:769px){
+    .stats-grid-desktop{grid-template-columns:repeat(4,1fr)!important}
+    .content-desktop{padding:28px 32px!important}
+    .header-desktop{padding:20px 32px!important}
+    .tabbar-desktop{padding:0 32px!important}
+    .mbox-desktop{min-width:480px}
+  }
+  @media(max-width:768px){
+    .card{padding:14px!important;border-radius:12px!important;margin-bottom:12px!important}
+    .stat-card{padding:12px 14px!important}
+    .btn-outline{padding:8px 12px!important;font-size:12px!important}
+    .btn-primary{padding:10px 16px!important;font-size:13px!important}
+    .tab-btn{font-size:11px!important;padding:8px 8px!important}
+  }
+  @media(max-width:480px){
+    input{font-size:16px!important}
+    .btn-full{padding:16px!important;font-size:15px!important}
+    .tab-btn{font-size:10px!important;padding:8px 6px!important}
+    .card-title{font-size:12px!important}
+  }
 `;
